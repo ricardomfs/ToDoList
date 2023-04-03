@@ -10,8 +10,6 @@ import java.util.List;
 public record ListaDtoIncluir (
         @NotBlank
         String name,
-        @NotNull
-        List<Item> itemList,
         @NotBlank
         ToDoList toDoList
 ){

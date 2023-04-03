@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+<!--<?xml version="1.0" encoding="UTF-8" standalone="no"?>-->
+<!--<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"-->
+<!--                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"-->
+<!--                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">-->
 
-    <changeSet id="CREATE TABLE usuario" author="ricardo">
-        <createTable tableName="usuario">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
-            <column name="nome" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="cpf" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name = "to_do_list" type="bigint">
-                <constraints nullable="false"
-                             foreignKeyName="fk_usuario_has_lista"
-                             references="to_do_list(id)"/>
-            </column>
-        </createTable>
-    </changeSet>
-</databaseChangeLog>
+<!--    <changeSet id="CREATE TABLE usuario" author="ricardo">-->
+<!--        <createTable tableName="usuario">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="nome" type="varchar">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="cpf" type="varchar">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name = "to_do_list" type="bigint">-->
+<!--                <constraints nullable="false"-->
+<!--                             foreignKeyName="fk_usuario_has_lista"-->
+<!--                             references="to_do_list(id)"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+<!--</databaseChangeLog>-->

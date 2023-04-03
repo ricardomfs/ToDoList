@@ -1,11 +1,6 @@
-logging:
-  level:
-    liquibase: INFO
 server:
   port: ${SERVER_PORT:8080}
 spring:
-  liquibase:
-    change-log: classpath:/db/changelog/db.changelog-master.xml
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:to_do_list

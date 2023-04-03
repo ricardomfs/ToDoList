@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,8 @@ public class ToDoListService {
     }
     public ToDoList findById(Long id) {
         return toDoListRepository.findById(id)
-                .orElseThrow(() -> new HttpStatusCodeException(HttpStatus.BAD_REQUEST,"To Do List com o Id: " + id + " não encontrado"){
-        });
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "To Do List com o Id: " + id + " não encontrado") {
+                        });
     }
 }

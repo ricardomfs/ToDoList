@@ -9,9 +9,8 @@ import java.time.LocalDate;
 public record ItemDtoIncluir (
         @NotBlank
         String name,
+        @NotBlank
         LocalDate prazo,
-        boolean completed,
-        @NotNull
-        Lista lista
+        boolean completed
         ){
 }
