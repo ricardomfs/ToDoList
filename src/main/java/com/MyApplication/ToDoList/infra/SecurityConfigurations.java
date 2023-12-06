@@ -2,17 +2,11 @@ package com.MyApplication.ToDoList.infra;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.jaas.memory.InMemoryConfiguration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -20,16 +14,24 @@ public class SecurityConfigurations {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+                .anyRequest().permitAll();
+//                .authenticated()
+//                .and()
+//                .httpBasic();
+
         http.csrf().disable();
+        /** ESSA OPÇÃO PERMITE QUE O H2 CONSOLE FUNCIONE COM S SS ATIVADO **/
+        /*
+        *  POR PADRÃO, O SPRING SECURITY DESATIVA A RENDERIZAÇÃO DENTRO DE UM IFRAME
+        *  PORQUE PERMITIR QUE UMA PÁGINA DA WEB SEJA ADICIONADA A UM FRAME PODE SER UM PROBLEMA DE SEGURANÇA, POR EXEMPLO,
+        *  CLICKJACKING. COMO O CONSOLE H2 É EXECUTADO DENTRO DE UM QUADRO, ENQUANTO O SPRING SECURITY ESTÁ HABILITADO,
+        *  AS OPÇÕES DE QUADRO DEVEM SER DESATIVADAS EXPLICITAMENTE PARA QUE O CONSOLE H2 FUNCIONE.
+        */
+        http.headers().frameOptions().disable();
         return http.build();
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        return passwordEncoder;
+        return NoOpPasswordEncoder.getInstance();
     }
 }

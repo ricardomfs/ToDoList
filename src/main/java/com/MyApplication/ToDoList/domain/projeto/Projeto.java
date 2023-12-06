@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.domain.toDoList;
+package com.MyApplication.ToDoList.domain.projeto;
 
 import com.MyApplication.ToDoList.domain.lista.Lista;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,18 +16,20 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class ToDoList {
+public class Projeto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "toDoList",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private String descricao;
+    @OneToMany(mappedBy = "toDoList",cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Lista> listas;
 
 
-    public ToDoList(ToDoListDtoIncluir dto) {
+    public Projeto(ProjetoDtoIncluir dto) {
         this.name = dto.name();
-        this.listas = dto.listas() != null ? dto.listas() : new ArrayList<Lista>();
+        this.descricao = dto.descricao();
+        this.listas = new ArrayList<>();
     }
 }

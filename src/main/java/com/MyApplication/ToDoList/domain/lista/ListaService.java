@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -15,31 +16,38 @@ import java.util.Optional;
 public class ListaService {
     private final ListaRepository listaRepository;
 
-    public Lista persistLista(ItemDtoIncluir lista) {
+    public Lista persistLista(ListaDtoIncluir lista) {
         Lista listaVerificar = findByName(lista.name());
-        if(listaVerificar != null) {
-            return listaRepository.save(listaVerificar);
+        if (listaVerificar != null) {
+            throw new RuntimeException("Lista com o nome: " + lista.name() + " ja existe!");
+        } else {
+            return listaRepository.save(new Lista(lista));
         }
-        return null;
     }
+
     public Lista findByName(String name) {
         Optional<Lista> lista = listaRepository.findByName(name);
         return lista.isPresent() ? lista.get() : null;
     }
+
     public Page<Lista> findAll(Pageable page) {
         return listaRepository.findAll(page);
     }
-    public Lista findById(Long id) {
-        return listaRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Lista de Id: "+ id +"não encontrada"));
+
+    public Lista findByIdOrElseThrowBadRequest(Long id) {
+        return listaRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lista de Id: " + id + "não encontrada"));
     }
-    public Lista updateLista(ListaDtoUpdateIncluir updateLista) {
-        Lista lista = this.findByName(updateLista.oldName());
+
+    @Transactional
+    public void updateLista(ListaDtoUpdateIncluir updateLista) {
+        Lista lista = this.findByIdOrElseThrowBadRequest(updateLista.id());
         lista.setName(updateLista.newName());
-        return lista;
     }
-    public Lista deleteLista(String name) {
+    @Transactional
+    public void deleteLista(String name) {
         Lista lista = this.findByName(name);
         listaRepository.delete(lista);
-        return lista;
     }
 }

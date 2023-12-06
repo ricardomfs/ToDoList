@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.controllers;
+package com.MyApplication.ToDoList.domain.item;
 
 import com.MyApplication.ToDoList.domain.item.Item;
 import com.MyApplication.ToDoList.domain.item.ItemDtoIncluir;

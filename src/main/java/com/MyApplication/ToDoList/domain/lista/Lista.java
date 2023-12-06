@@ -1,15 +1,15 @@
 package com.MyApplication.ToDoList.domain.lista;
 
 import com.MyApplication.ToDoList.domain.item.Item;
-import com.MyApplication.ToDoList.domain.toDoList.ToDoList;
-import com.MyApplication.ToDoList.domain.toDoList.ToDoListDtoIncluir;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.MyApplication.ToDoList.domain.projeto.Projeto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,16 +22,18 @@ public class Lista {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Temporal(TemporalType.DATE)
+    private LocalDate dataDeCriacao;
+    @OneToMany(mappedBy = "lista", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Item> itens;
-    @ManyToOne()
-    @JoinColumn(name = "to_do_list", referencedColumnName = "id", nullable = false)
-    @JsonIgnore
-    private ToDoList toDoList;
+    @ManyToOne
+    @JoinColumn(name = "projeto_has_lista", referencedColumnName = "id", nullable = false)
+    private Projeto projeto;
 
-    public Lista(ToDoListDtoIncluir toDoList) {
-        this.name = "Lista em branco";
-        this.itens = null;
-        this.toDoList = new ToDoList(toDoList);
+    public Lista(ListaDtoIncluir dto) {
+        this.name = dto.name();
+        this.itens = new ArrayList<>();
+        this.dataDeCriacao = LocalDate.now();
+        this.projeto = null;
     }
 }

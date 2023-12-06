@@ -5,9 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public record ItemDtoUpdateIncluir(
-        String oldName,
-        LocalDate oldPrazo,
         String newName,
+        String descricao,
         LocalDate newPrazo
         ){
 }

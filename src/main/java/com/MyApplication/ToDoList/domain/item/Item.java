@@ -1,7 +1,7 @@
 package com.MyApplication.ToDoList.domain.item;
 
+import com.MyApplication.ToDoList.domain.comentario.Comentario;
 import com.MyApplication.ToDoList.domain.lista.Lista;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,15 +28,18 @@ public class Item {
     @Temporal(TemporalType.DATE)
     private LocalDate prazo;
     @NotNull
-    private short completed;
+    private boolean isCompleted;
     @ManyToOne
     @JoinColumn(name = "lista", referencedColumnName = "id", nullable = false)
-    @JsonIgnore
     private Lista lista;
+    @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
+    private List<Comentario> comentario;
 
     public Item(ItemDtoIncluir item){
         this.name = item.name();
         this.prazo = item.prazo();
-        this.completed = 0;
+        this.isCompleted = false;
+        this.lista = null;
+        this.comentario = null;
     }
 }

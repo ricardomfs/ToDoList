@@ -1,23 +1,32 @@
 package com.MyApplication.ToDoList.domain.lista;
 
-import com.MyApplication.ToDoList.domain.item.Item;
-import com.MyApplication.ToDoList.domain.toDoList.ToDoList;
+import com.MyApplication.ToDoList.domain.item.ItemDtoDetalhar;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public record ListaDtoDetalhar (
+public record ListaDtoDetalhar(
         Long id,
         String name,
-        List<Item> itens,
-        ToDoList toDoList
+        LocalDate dataDeCriacao,
+        List<ItemDtoDetalhar> itens,
+        Long projeto
 
-){
+) {
     public ListaDtoDetalhar(Lista lista) {
         this(
                 lista.getId(),
                 lista.getName(),
-                lista.getItens(),
-                lista.getToDoList()
+                lista.getDataDeCriacao(),
+                lista.getItens() != null ? lista
+                        .getItens()
+                        .stream()
+                        .map(ItemDtoDetalhar::new)
+                        .collect(Collectors.toList()) : null,
+                lista
+                        .getProjeto()
+                        .getId()
         );
     }
 }
