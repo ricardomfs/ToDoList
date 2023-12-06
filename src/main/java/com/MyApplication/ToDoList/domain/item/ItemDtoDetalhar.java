@@ -9,7 +9,7 @@ public record ItemDtoDetalhar(
         Long id,
         String name,
         LocalDate prazo,
-        boolean complete,
+        short complete,
         Lista lista
         ) {
         public ItemDtoDetalhar(Item item){
@@ -17,7 +17,7 @@ public record ItemDtoDetalhar(
                         item.getId(),
                         item.getName(),
                         item.getPrazo(),
-                        item.isCompleted(),
+                        item.getCompleted(),
                         item.getLista()
                 );
         }

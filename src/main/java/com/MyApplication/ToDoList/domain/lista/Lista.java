@@ -3,6 +3,7 @@ package com.MyApplication.ToDoList.domain.lista;
 import com.MyApplication.ToDoList.domain.item.Item;
 import com.MyApplication.ToDoList.domain.toDoList.ToDoList;
 import com.MyApplication.ToDoList.domain.toDoList.ToDoListDtoIncluir;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class Lista {
     private List<Item> itens;
     @ManyToOne()
     @JoinColumn(name = "to_do_list", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private ToDoList toDoList;
 
     public Lista(ToDoListDtoIncluir toDoList) {

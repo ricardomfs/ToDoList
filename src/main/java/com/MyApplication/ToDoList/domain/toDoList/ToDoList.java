@@ -1,6 +1,7 @@
 package com.MyApplication.ToDoList.domain.toDoList;
 
 import com.MyApplication.ToDoList.domain.lista.Lista;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class ToDoList {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "toDoList",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Lista> listas;
 
 

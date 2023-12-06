@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ItemController {
     private final ItemService itemService;
     @PostMapping
-    public ResponseEntity persistItem(@RequestBody @Valid ItemDtoIncluir itemDto){
+    public ResponseEntity persistItem(@RequestBody @Valid ItemDtoIncluir itemDto) {
         return ResponseEntity.ok(itemService.save(new Item(itemDto)));
     }
     @GetMapping(path = "/")
