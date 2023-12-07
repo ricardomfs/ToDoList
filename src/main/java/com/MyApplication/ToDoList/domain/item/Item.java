@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "itens")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,13 +25,12 @@ public class Item {
     private Long Id;
     @NotBlank
     private String name;
-    @NotBlank
     @Temporal(TemporalType.DATE)
     private LocalDate prazo;
-    @NotNull
+    private String descricao;
     private boolean isCompleted;
     @ManyToOne
-    @JoinColumn(name = "lista", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "item_has_lista", referencedColumnName = "id", nullable = false)
     private Lista lista;
     @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
     private List<Comentario> comentario;
@@ -39,6 +39,7 @@ public class Item {
         this.name = item.name();
         this.prazo = item.prazo();
         this.isCompleted = false;
+        this.descricao = item.descricao();
         this.lista = null;
         this.comentario = null;
     }

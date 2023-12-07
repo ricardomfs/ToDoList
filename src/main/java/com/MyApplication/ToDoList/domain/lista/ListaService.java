@@ -3,13 +3,16 @@ package com.MyApplication.ToDoList.domain.lista;
 import com.MyApplication.ToDoList.domain.item.ItemDtoIncluir;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +33,16 @@ public class ListaService {
         return lista.isPresent() ? lista.get() : null;
     }
 
-    public Page<Lista> findAll(Pageable page) {
-        return listaRepository.findAll(page);
+    public Page<ListaDtoDetalhar> findAll(Pageable page) {
+        List<Lista> listas = listaRepository
+                .findAll(page)
+                .get()
+                .toList();
+
+        return new PageImpl<>(listas
+                .stream()
+                .map(ListaDtoDetalhar::new)
+                .collect(Collectors.toList()));
     }
 
     public Lista findByIdOrElseThrowBadRequest(Long id) {
@@ -45,6 +56,7 @@ public class ListaService {
         Lista lista = this.findByIdOrElseThrowBadRequest(updateLista.id());
         lista.setName(updateLista.newName());
     }
+
     @Transactional
     public void deleteLista(String name) {
         Lista lista = this.findByName(name);

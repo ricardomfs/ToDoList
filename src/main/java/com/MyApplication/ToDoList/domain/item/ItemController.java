@@ -6,6 +6,7 @@ import com.MyApplication.ToDoList.domain.item.ItemDtoUpdateIncluir;
 import com.MyApplication.ToDoList.domain.item.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,25 +16,35 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/item")
 public class ItemController {
     private final ItemService itemService;
+
     @PostMapping
-    public ResponseEntity persistItem(@RequestBody @Valid ItemDtoIncluir itemDto) {
-        return ResponseEntity.ok(itemService.save(new Item(itemDto)));
+    public ResponseEntity<ItemDtoDetalhar> persistItem(@RequestBody @Valid ItemDtoIncluir itemDto) {
+        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.save(new Item(itemDto))));
     }
+
     @GetMapping(path = "/")
-    public ResponseEntity findAll(Pageable page){
-        return ResponseEntity.ok(itemService.findAll(page));
+    public ResponseEntity<Page<ItemDtoDetalhar>> findAll(Pageable page) {
+        return ResponseEntity.ok((itemService.findAll(page)));
     }
+
     @GetMapping(path = "/{id}")
-    public ResponseEntity findById(@PathVariable Long id){
-        return ResponseEntity.ok(itemService.findById(id));
+    public ResponseEntity<ItemDtoDetalhar> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.findByIdOrElseThrow(id)));
     }
+
     @PatchMapping(path = "/update")
-    public ResponseEntity updateItem(@RequestBody @Valid ItemDtoUpdateIncluir itemToUpdate){
-        ResponseEntity.ok(itemService.updateItemByName(itemToUpdate));
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ItemDtoDetalhar> updateItem(@RequestBody @Valid ItemDtoUpdateIncluir itemToUpdate) {
+        itemService.updateItemByName(itemToUpdate);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
-    @DeleteMapping(path = "delete/{name}")
-    public ResponseEntity deleteItem(@PathVariable String name) {
-        return ResponseEntity.ok(itemService.deleteItemByName(name));
+
+    @DeleteMapping(path = "delete/{id}")
+    public ResponseEntity<ItemDtoDetalhar> deleteItem(@PathVariable Long id) {
+        itemService.deleteById(id);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

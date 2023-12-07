@@ -6,15 +6,21 @@ spring:
       name: admin
       password: 123
       role: ADMIN
+  sql:
+    init:
+      mode: always
   datasource:
-#    driver-class-name: org.h2.Driver
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5435/to_do_list
-    username: postgres
-    password: postgres
+    driver-class-name: org.h2.Driver
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5435/to_do_list
+    url: jdbc:h2:mem:to_do_list
+    username: sa
+    password:
   jpa:
-#    database-platform: org.hibernate.dialect.H2Dialect
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    ISSO FAZ COM QUE OS SCHEMAS SEJAM CRIADOS ANTES DA INSERCAO DE DADOS NO BANCO DE DADOS
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.H2Dialect
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     properties:

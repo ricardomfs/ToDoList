@@ -22,7 +22,7 @@ public class Projeto {
     private Long id;
     private String name;
     private String descricao;
-    @OneToMany(mappedBy = "toDoList",cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "projeto",cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Lista> listas;
 

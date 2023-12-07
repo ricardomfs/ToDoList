@@ -27,7 +27,7 @@ public class Lista {
     @OneToMany(mappedBy = "lista", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Item> itens;
     @ManyToOne
-    @JoinColumn(name = "projeto_has_lista", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "lista_has_projeto", referencedColumnName = "id", nullable = false)
     private Projeto projeto;
 
     public Lista(ListaDtoIncluir dto) {

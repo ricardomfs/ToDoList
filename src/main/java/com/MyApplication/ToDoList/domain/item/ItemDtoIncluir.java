@@ -9,11 +9,9 @@ import java.time.LocalDate;
 public record ItemDtoIncluir (
         @NotBlank
         String name,
-        @NotBlank
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate prazo,
-        @NotNull
-        boolean isCompleted,
+        String descricao,
         @NotNull
         Long lista
 ){
