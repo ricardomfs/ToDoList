@@ -12,22 +12,22 @@ import org.springframework.web.server.ResponseStatusException;
 public class ProjetoService {
 
     private final ProjetoRepository projetoRepository;
-    public ProjetoDtoDetalhar persistToDoList(ProjetoDtoIncluir projeto) {
+    public Projeto persistToDoList(ProjetoDtoIncluir projeto) {
 
         //ver se existe uma Lista com o mesmo nome e salva caso não seja encontrada
         if(projetoRepository
-                .findByName(projeto.name()).isEmpty()){
-            Projeto paraSalvar = new Projeto(projeto);
-            projetoRepository.save(paraSalvar);
-            return new ProjetoDtoDetalhar(paraSalvar);
+                .findByName(projeto.name()).isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Projeto de mesmo nome encontrado!");
         }
-        return null;
+        Projeto paraSalvar = new Projeto(projeto);
+
+        return projetoRepository.save(paraSalvar);
     }
 
     public Page<Projeto> findAll(Pageable page) {
         return projetoRepository.findAll(page);
     }
-    public Projeto findById(Long id) {
+    public Projeto findByIdOrThrowBadRequest(Long id) {
         return projetoRepository
                 .findById(id)
                 .orElseThrow(

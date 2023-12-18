@@ -2,6 +2,7 @@ package com.MyApplication.ToDoList.domain.item;
 
 import com.MyApplication.ToDoList.domain.comentario.Comentario;
 import com.MyApplication.ToDoList.domain.lista.Lista;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +22,7 @@ import java.util.List;
 @Builder
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     @NotBlank
     private String name;
@@ -31,8 +32,9 @@ public class Item {
     private boolean isCompleted;
     @ManyToOne
     @JoinColumn(name = "item_has_lista", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Lista lista;
-    @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Comentario> comentario;
 
     public Item(ItemDtoIncluir item){

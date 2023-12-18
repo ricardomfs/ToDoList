@@ -1,10 +1,13 @@
 package com.MyApplication.ToDoList.domain.lista;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,14 +16,16 @@ public class ListaController {
     private final ListaService listaService;
 
     @PostMapping
-    private ResponseEntity<ListaDtoDetalhar> persistLista(ListaDtoIncluir dtoIncluir) {
+    private ResponseEntity<ListaDtoDetalhar> persistLista(@RequestBody @Valid ListaDtoIncluir dtoIncluir) {
         return ResponseEntity.ok(new ListaDtoDetalhar(listaService.persistLista(dtoIncluir)));
     }
 
     @GetMapping
-    private ResponseEntity<Page<ListaDtoDetalhar>> findAll(Pageable page) {
+    private ResponseEntity<List<ListaDtoDetalhar>> findAll(Pageable page) {
 
-        return ResponseEntity.ok(listaService.findAll(page));
+        return ResponseEntity.ok(listaService
+                .findAll(page)
+                .getContent());
     }
 
     @GetMapping(path = "/{id}")

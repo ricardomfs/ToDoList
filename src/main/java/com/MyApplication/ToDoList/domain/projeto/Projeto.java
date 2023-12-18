@@ -1,7 +1,6 @@
 package com.MyApplication.ToDoList.domain.projeto;
 
 import com.MyApplication.ToDoList.domain.lista.Lista;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,14 +17,12 @@ import java.util.List;
 @Builder
 public class Projeto {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String descricao;
-    @OneToMany(mappedBy = "projeto",cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    @JsonIgnore
+    @OneToMany(mappedBy = "projeto",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lista> listas;
-
 
     public Projeto(ProjetoDtoIncluir dto) {
         this.name = dto.name();

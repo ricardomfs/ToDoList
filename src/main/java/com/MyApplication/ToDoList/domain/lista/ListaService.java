@@ -1,6 +1,7 @@
 package com.MyApplication.ToDoList.domain.lista;
 
-import com.MyApplication.ToDoList.domain.item.ItemDtoIncluir;
+import com.MyApplication.ToDoList.domain.projeto.Projeto;
+import com.MyApplication.ToDoList.domain.projeto.ProjetoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,19 +19,25 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ListaService {
     private final ListaRepository listaRepository;
+    private final ProjetoService projetoService;
 
     public Lista persistLista(ListaDtoIncluir lista) {
-        Lista listaVerificar = findByName(lista.name());
-        if (listaVerificar != null) {
-            throw new RuntimeException("Lista com o nome: " + lista.name() + " ja existe!");
-        } else {
-            return listaRepository.save(new Lista(lista));
+        Projeto projeto = projetoService.findByIdOrThrowBadRequest(lista.projeto());
+        Lista listaVerificar = this.findByName(lista.name());
+        if(listaVerificar != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Já existe uma lista com esse nome!");
         }
+        Lista listaToSave = new Lista(lista);
+        listaToSave.setProjeto(projeto);
+        projeto.getListas().add(listaToSave);
+
+        return listaRepository.save(listaToSave);
     }
 
     public Lista findByName(String name) {
         Optional<Lista> lista = listaRepository.findByName(name);
-        return lista.isPresent() ? lista.get() : null;
+
+        return lista.orElse(null);
     }
 
     public Page<ListaDtoDetalhar> findAll(Pageable page) {

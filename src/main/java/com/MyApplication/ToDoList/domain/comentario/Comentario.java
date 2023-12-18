@@ -1,6 +1,7 @@
 package com.MyApplication.ToDoList.domain.comentario;
 
 import com.MyApplication.ToDoList.domain.item.Item;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +24,6 @@ public class Comentario {
     private LocalDate dataDeCriacao;
     @ManyToOne
     @JoinColumn(name = "item_has_comentario", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Item item;
 }

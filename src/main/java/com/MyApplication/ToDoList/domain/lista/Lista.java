@@ -2,6 +2,7 @@ package com.MyApplication.ToDoList.domain.lista;
 
 import com.MyApplication.ToDoList.domain.item.Item;
 import com.MyApplication.ToDoList.domain.projeto.Projeto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import java.util.List;
 @Builder
 public class Lista {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @Temporal(TemporalType.DATE)
@@ -28,6 +29,7 @@ public class Lista {
     private List<Item> itens;
     @ManyToOne
     @JoinColumn(name = "lista_has_projeto", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private Projeto projeto;
 
     public Lista(ListaDtoIncluir dto) {
