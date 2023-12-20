@@ -1,5 +1,7 @@
 package com.MyApplication.ToDoList.domain.item;
 
+import com.MyApplication.ToDoList.domain.lista.Lista;
+import com.MyApplication.ToDoList.domain.lista.ListaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,18 +19,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
+    private final ListaService listaService;
 
-    public Item save(Item item){
-        if(findByName(item.getName())==null){
-            return itemRepository.save(item);
-        }
-        return null;
+    public Item persistItem(ItemDtoIncluir dto) {
+        Lista lista = listaService.findByIdOrElseThrowBadRequest(dto.lista());
+
+        Item itemToPersist = new Item(dto);
+        itemToPersist.setLista(lista);
+
+        return itemRepository.save(itemToPersist);
     }
-    public Item findByName(String name){
+
+    public Item findByName(String name) {
         Optional<Item> item = itemRepository.findByName(name);
         return item.orElse(null);
     }
-    public Page<ItemDtoDetalhar> findAll(Pageable page){
+
+    public Page<ItemDtoDetalhar> findAll(Pageable page) {
         List<Item> listas = itemRepository
                 .findAll(page)
                 .get()
@@ -39,20 +46,25 @@ public class ItemService {
                 .map(ItemDtoDetalhar::new)
                 .collect(Collectors.toList()));
     }
-    public Item findByIdOrElseThrow(Long id){
-        return itemRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "item do id: "+ id +" não encontrado"){
+
+    public Item findByIdOrElseThrowBadRequest(Long id) {
+        return itemRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "item do id: " + id + " não encontrado") {
                 });
     }
+
     @Transactional
     public void updateItemByName(ItemDtoUpdateIncluir dto) {
-        Item itemToUpdate = Item.builder()
+        Item itemToUpdate = Item
+                .builder()
                 .Id(dto.id())
                 .name(dto.newName())
                 .descricao(dto.descricao())
                 .prazo(dto.newPrazo())
                 .build();
     }
+
     @Transactional
     public void deleteById(Long id) {
         itemRepository.deleteById(id);

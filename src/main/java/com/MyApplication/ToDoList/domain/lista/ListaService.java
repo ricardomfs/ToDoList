@@ -24,12 +24,14 @@ public class ListaService {
     public Lista persistLista(ListaDtoIncluir lista) {
         Projeto projeto = projetoService.findByIdOrThrowBadRequest(lista.projeto());
         Lista listaVerificar = this.findByName(lista.name());
-        if(listaVerificar != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Já existe uma lista com esse nome!");
+        if (listaVerificar != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma lista com esse nome!");
         }
         Lista listaToSave = new Lista(lista);
         listaToSave.setProjeto(projeto);
-        projeto.getListas().add(listaToSave);
+        projeto
+                .getListas()
+                .add(listaToSave);
 
         return listaRepository.save(listaToSave);
     }

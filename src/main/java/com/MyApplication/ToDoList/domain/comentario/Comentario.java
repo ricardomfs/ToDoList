@@ -19,11 +19,18 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(columnDefinition = "text")
     private String descricao;
     @Temporal(TemporalType.DATE)
     private LocalDate dataDeCriacao;
     @ManyToOne
-    @JoinColumn(name = "item_has_comentario", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "item", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     private Item item;
+
+    public Comentario(ComentarioDtoIncluir dto) {
+        this.descricao = dto.descricao();
+        this.dataDeCriacao = LocalDate.now();
+        this.item = null;
+    }
 }

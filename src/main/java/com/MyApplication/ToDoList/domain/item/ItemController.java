@@ -1,9 +1,5 @@
 package com.MyApplication.ToDoList.domain.item;
 
-import com.MyApplication.ToDoList.domain.item.Item;
-import com.MyApplication.ToDoList.domain.item.ItemDtoIncluir;
-import com.MyApplication.ToDoList.domain.item.ItemDtoUpdateIncluir;
-import com.MyApplication.ToDoList.domain.item.ItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +15,7 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<ItemDtoDetalhar> persistItem(@RequestBody @Valid ItemDtoIncluir itemDto) {
-        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.save(new Item(itemDto))));
+        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.persistItem(itemDto)));
     }
 
     @GetMapping(path = "/")
@@ -29,7 +25,7 @@ public class ItemController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<ItemDtoDetalhar> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.findByIdOrElseThrow(id)));
+        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.findByIdOrElseThrowBadRequest(id)));
     }
 
     @PatchMapping(path = "/update")
