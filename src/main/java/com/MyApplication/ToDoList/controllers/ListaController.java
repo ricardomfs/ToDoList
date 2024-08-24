@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/lista")
 public class ListaController {
@@ -19,27 +21,27 @@ public class ListaController {
     }
 
     @PostMapping
-    private ResponseEntity save(@RequestBody @Valid ListaDtoIncluir dto) {
+    private ResponseEntity<ListaDtoDetalhar> save(@RequestBody @Valid ListaDtoIncluir dto) {
         return ResponseEntity.ok(new ListaDtoDetalhar(listaService.persistLista(dto)));
     }
 
     @GetMapping
-    private ResponseEntity findAll(Pageable page) {
+    private ResponseEntity<List<ListaDtoDetalhar>> findAll(Pageable page) {
         return ResponseEntity.ok(listaService.findAll(page).stream().map(ListaDtoDetalhar::new).toList());
     }
 
     @GetMapping(path = "/{id}")
-    private ResponseEntity findById(@PathVariable Long id) {
+    private ResponseEntity<ListaDtoDetalhar> findById(@PathVariable Long id) {
         return ResponseEntity.ok(new ListaDtoDetalhar(listaService.findByIdOrElseThrowNotFound(id)));
     }
 
     @PatchMapping(path = "/update")
-    private ResponseEntity updateListSituation(ListaDtoUpdateIncluir update) {
+    private ResponseEntity<ListaDtoDetalhar> updateListSituation(ListaDtoUpdateIncluir update) {
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(path = "/delete/{id}")
-    private ResponseEntity deleteLista(@PathVariable Long id) {
+    private ResponseEntity<ListaDtoDetalhar> deleteLista(@PathVariable Long id) {
         listaService.deleteLista(id);
         return ResponseEntity.noContent().build();
     }
