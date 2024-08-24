@@ -1,6 +1,5 @@
 package com.MyApplication.ToDoList.domain.item;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -10,9 +9,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository itemRepository;
+
+    public ItemService(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     public Item save(Item item){
         if(findByName(item.getName())==null){

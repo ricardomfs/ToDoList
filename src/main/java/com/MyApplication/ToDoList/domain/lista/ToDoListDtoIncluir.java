@@ -1,6 +1,5 @@
-package com.MyApplication.ToDoList.domain.toDoList;
+package com.MyApplication.ToDoList.domain.lista;
 
-import com.MyApplication.ToDoList.domain.lista.Lista;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;

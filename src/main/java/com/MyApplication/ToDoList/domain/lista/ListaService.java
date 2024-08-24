@@ -1,7 +1,6 @@
 package com.MyApplication.ToDoList.domain.lista;
 
 import com.MyApplication.ToDoList.domain.item.ItemDtoIncluir;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ListaService {
     private final ListaRepository listaRepository;
+
+    public ListaService(ListaRepository listaRepository) {
+        this.listaRepository = listaRepository;
+    }
 
     public Lista persistLista(ItemDtoIncluir lista) {
         Lista listaVerificar = findByName(lista.name());

@@ -1,21 +1,21 @@
 package com.MyApplication.ToDoList.controllers;
 
 import com.MyApplication.ToDoList.domain.item.ItemDtoIncluir;
-import com.MyApplication.ToDoList.domain.item.ItemDtoUpdateIncluir;
-import com.MyApplication.ToDoList.domain.lista.Lista;
 import com.MyApplication.ToDoList.domain.lista.ListaDtoUpdateIncluir;
 import com.MyApplication.ToDoList.domain.lista.ListaService;
-import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/lista")
 public class ListaController {
     private final ListaService listaService;
+
+    public ListaController(ListaService listaService) {
+        this.listaService = listaService;
+    }
+
     @PostMapping
     private ResponseEntity save(ItemDtoIncluir itemDto){
         return ResponseEntity.ok(listaService.persistLista(itemDto));
