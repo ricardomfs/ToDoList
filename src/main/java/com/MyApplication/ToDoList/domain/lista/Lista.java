@@ -3,20 +3,21 @@ package com.MyApplication.ToDoList.domain.lista;
 import com.MyApplication.ToDoList.domain.item.Item;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Lista {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL)
     private List<Item> itens;
 
-    public Lista(ToDoListDtoIncluir toDoList) {
-        this.name = "Lista em branco";
-        this.itens = null;
+    public Lista(ListaDtoIncluir dtoIncluir) {
+        this.name = dtoIncluir.name();
+        this.itens = new ArrayList<>();
     }
 
     public Lista() {
