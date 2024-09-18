@@ -1,7 +1,6 @@
 package com.MyApplication.ToDoList.domain.item;
 
 import com.MyApplication.ToDoList.domain.lista.Lista;
-import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 
