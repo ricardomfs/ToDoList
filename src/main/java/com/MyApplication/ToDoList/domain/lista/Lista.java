@@ -1,6 +1,7 @@
 package com.MyApplication.ToDoList.domain.lista;
 
 import com.MyApplication.ToDoList.domain.item.Item;
+import com.MyApplication.ToDoList.domain.user.MyUser;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ public class Lista {
     private String name;
     @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL)
     private List<Item> itens;
+    @ManyToOne
+    @JoinColumn(name = "myUser", nullable = false)
+    private MyUser myUser;
 
     public Lista(ListaDtoIncluir dtoIncluir) {
         this.name = dtoIncluir.name();
@@ -51,5 +55,13 @@ public class Lista {
 
     public void setItens(List<Item> itens) {
         this.itens = itens;
+    }
+
+    public MyUser getMyUser() {
+        return myUser;
+    }
+
+    public void setMyUser(MyUser myUser) {
+        this.myUser = myUser;
     }
 }

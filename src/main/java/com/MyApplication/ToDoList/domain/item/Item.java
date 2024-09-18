@@ -18,7 +18,7 @@ public class Item {
     private LocalDate prazo;
     private boolean completed;
     @ManyToOne
-    @JoinColumn(name = "itens", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "lista", nullable = false)
     private Lista lista;
 
     public Item(ItemDtoIncluir item){

@@ -1,5 +1,7 @@
 package com.MyApplication.ToDoList.domain.lista;
 
+import com.MyApplication.ToDoList.domain.user.MyUser;
+import com.MyApplication.ToDoList.domain.user.MyUserService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,35 +14,49 @@ import java.util.Optional;
 @Service
 public class ListaService {
     private final ListaRepository listaRepository;
+    private final MyUserService myUserService;
 
-    public ListaService(ListaRepository listaRepository) {
+    public ListaService(ListaRepository listaRepository, MyUserService myUserService) {
         this.listaRepository = listaRepository;
+        this.myUserService = myUserService;
     }
 
     public Lista findByIdOrElseThrowNotFound(Long id) {
-        return listaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lista de Id: " + id + " não encontrada"));
+        return listaRepository
+                .findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lista de Id: " + id + " não encontrada"));
     }
-    public Lista findByName(String name) {
-        Optional<Lista> lista = listaRepository.findByName(name);
+
+    public Lista findByName(String name, Long userId) {
+        Optional<Lista> lista = listaRepository.findByNameAndMyUserId(name, userId);
         return lista.orElse(null);
     }
 
+    @Transactional
     public Lista persistLista(ListaDtoIncluir dto) {
-        Lista listaJaExiste = this.findByName(dto.name());
-        if(listaJaExiste != null) {
+        MyUser bySecurityContext = myUserService.findBySecurityContext();
+        Lista listaJaExiste = this.findByName(dto.name(), bySecurityContext.getId());
+        if (listaJaExiste != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma lista com esse nome");
         }
         Lista listaToPersist = new Lista(dto);
+        listaToPersist.setMyUser(bySecurityContext);
+        bySecurityContext
+                .getLista()
+                .add(listaToPersist);
         return listaRepository.save(listaToPersist);
     }
+
     public Page<Lista> findAll(Pageable page) {
         return listaRepository.findAll(page);
     }
+
     @Transactional
     public void updateLista(ListaDtoUpdateIncluir updateLista) {
         Lista lista = this.findByIdOrElseThrowNotFound(updateLista.id());
         lista.setName(updateLista.newName());
     }
+
     @Transactional
     public void deleteLista(Long id) {
         Lista lista = this.findByIdOrElseThrowNotFound(id);

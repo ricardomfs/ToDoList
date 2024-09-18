@@ -1,13 +1,12 @@
 package com.MyApplication.ToDoList.controllers;
 
-import com.MyApplication.ToDoList.domain.item.Item;
-import com.MyApplication.ToDoList.domain.item.ItemDtoIncluir;
-import com.MyApplication.ToDoList.domain.item.ItemDtoUpdateIncluir;
-import com.MyApplication.ToDoList.domain.item.ItemService;
+import com.MyApplication.ToDoList.domain.item.*;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/item")
@@ -19,24 +18,46 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity persistItem(@RequestBody @Valid ItemDtoIncluir itemDto){
-        return ResponseEntity.ok(itemService.save(new Item(itemDto)));
+    public ResponseEntity<ItemDtoDetalhar> persistItem(@RequestBody @Valid ItemDtoIncluir itemDto) {
+        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.save(itemDto)));
     }
+
+    @GetMapping(path = "/find-By-lista")
+    public ResponseEntity<List<ItemDtoDetalhar>> findAllByListaId(@RequestParam Long listaId) {
+        return ResponseEntity.ok(itemService
+                .findByLista(listaId)
+                .stream()
+                .map(ItemDtoDetalhar::new)
+                .toList());
+    }
+
     @GetMapping(path = "/")
-    public ResponseEntity findAll(Pageable page){
-        return ResponseEntity.ok(itemService.findAll(page));
+    public ResponseEntity<List<ItemDtoDetalhar>> findAll(Pageable page) {
+        return ResponseEntity.ok(itemService
+                .findAll(page)
+                .stream()
+                .map(ItemDtoDetalhar::new)
+                .toList());
     }
+
     @GetMapping(path = "/{id}")
-    public ResponseEntity findById(@PathVariable Long id){
-        return ResponseEntity.ok(itemService.findById(id));
+    public ResponseEntity<ItemDtoDetalhar> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.findByIdOrElseThrowBadRequest(id)));
     }
+
     @PatchMapping(path = "/update")
-    public ResponseEntity updateItem(@RequestBody @Valid ItemDtoUpdateIncluir itemToUpdate){
-        ResponseEntity.ok(itemService.updateItemByName(itemToUpdate));
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> updateItem(@RequestBody @Valid ItemDtoUpdateIncluir itemToUpdate) {
+        itemService.updateItemByName(itemToUpdate);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
-    @DeleteMapping(path = "delete/{name}")
-    public ResponseEntity deleteItem(@PathVariable String name) {
-        return ResponseEntity.ok(itemService.deleteItemByName(name));
+
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<Void> deleteItem(@RequestParam String name, @RequestParam Long listaId) {
+        itemService.deleteItemByName(name, listaId);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
