@@ -1,5 +1,7 @@
-mySecret: 123456
-
+api:
+  security:
+    token:
+      mySecret: 123456
 spring:
   sql:
     init:

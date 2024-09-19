@@ -26,11 +26,6 @@ public class MyUser implements UserDetails {
     @OneToMany(mappedBy = "myUser")
     private List<Lista> lista;
 
-    public MyUser(MyUserPersistDto dto) {
-        this.username = dto.username();
-        this.password = dto.password();
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> rolesList = new ArrayList<>();
