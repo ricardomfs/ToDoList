@@ -19,9 +19,13 @@ public class MyUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
     private String password;
-    @OneToMany(mappedBy = "myUser")
+    @ManyToMany
+    @JoinTable(name = "my_user_has_my_role",
+            joinColumns = {@JoinColumn(name = "my_user_id", nullable = false, referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "my_role_id", nullable = false, referencedColumnName = "id")})
     private List<MyRole> myRoleList;
     @OneToMany(mappedBy = "myUser")
     private List<Lista> lista;

@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 
 @Service
-public class MyUserService implements UserDetailsService {
+public class MyUserService {
     private final MyUserRepository myUserRepository;
     private final MyRoleService myRoleService;
     private final PasswordEncoder passwordEncoder;
@@ -31,11 +31,6 @@ public class MyUserService implements UserDetailsService {
 
     public MyUser findUserByUsername(String username) {
         return myUserRepository.findByUsername(username);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.findUserByUsername(username);
     }
 
     @Transactional

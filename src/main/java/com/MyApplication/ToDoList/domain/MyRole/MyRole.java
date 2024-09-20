@@ -7,6 +7,8 @@ package com.MyApplication.ToDoList.domain.MyRole;
 import com.MyApplication.ToDoList.domain.user.MyUser;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 /**
  * @author ricardo
  */
@@ -19,9 +21,8 @@ public class MyRole {
     private Long id;
     @Column(name = "descricao", nullable = false)
     private String descricao;
-    @ManyToOne
-    @JoinColumn(name = "my_user", nullable = false)
-    private MyUser myUser;
+    @ManyToMany(mappedBy = "myRoleList")
+    private List<MyUser> myUserList;
 
     public MyRole(Long id, String descricao) {
         this.id = id;
