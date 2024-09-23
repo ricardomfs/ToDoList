@@ -23,21 +23,16 @@ public class ItemController {
     }
 
     @GetMapping(path = "/find-By-lista")
-    public ResponseEntity<List<ItemDtoDetalhar>> findAllByListaId(@RequestParam Long listaId) {
-        return ResponseEntity.ok(itemService
-                .findByLista(listaId)
-                .stream()
-                .map(ItemDtoDetalhar::new)
-                .toList());
-    }
-
-    @GetMapping(path = "/")
-    public ResponseEntity<List<ItemDtoDetalhar>> findAll(Pageable page) {
-        return ResponseEntity.ok(itemService
-                .findAll(page)
-                .stream()
-                .map(ItemDtoDetalhar::new)
-                .toList());
+//    public ResponseEntity<List<ItemDtoDetalhar>> findAllByListaId(@RequestParam Long listaId, Pageable pageable) {
+    public ResponseEntity<List<ItemDtoDetalhar>> findAllByListaId(@RequestParam String listaId) {
+//        return ResponseEntity.ok(itemService
+//                .findAllByLista(listaId, pageable)
+//                .stream()
+//                .map(ItemDtoDetalhar::new)
+//                .toList());
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
     @GetMapping(path = "/{id}")

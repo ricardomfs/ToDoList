@@ -28,8 +28,8 @@ public class ItemService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item de Id: " + id + " não encontrado"));
     }
 
-    public List<Item> findByLista(Long listaId) {
-        return itemRepository.findByListaId(listaId);
+    public Page<Item> findAllByLista(Long listaId, Pageable pageable) {
+        return itemRepository.findByListaId(listaId, pageable);
     }
 
     public Item findByNameAndListaId(String name, Long listaId) {
@@ -53,8 +53,8 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
-    public Page<Item> findAll(Pageable page) {
-        return itemRepository.findAll(page);
+    public Page<Item> findAll(Pageable page, Long listaId) {
+        return itemRepository.findByListaId(listaId, page);
     }
 
     @Transactional
@@ -69,10 +69,10 @@ public class ItemService {
         if (itemToUpdate
                 .newPrazo() != null
         ) {
-            item.setName(itemToUpdate.newName());
+            item.setPrazo(itemToUpdate.newPrazo());
         }
-        item.setPrazo(itemToUpdate.newPrazo());
     }
+
     @Transactional
     public void deleteItemByName(String name, Long listaId) {
         Item item = this.findByNameAndListaId(name, listaId);
