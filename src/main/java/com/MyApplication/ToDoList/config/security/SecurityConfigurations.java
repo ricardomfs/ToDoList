@@ -35,9 +35,9 @@ public class SecurityConfigurations {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.POST, "/user/login")
+                        .requestMatchers(HttpMethod.POST, "/user", "/user/login")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/user")
+                        .requestMatchers(HttpMethod.GET, "/test-endpoint")
                         .permitAll()
                         .requestMatchers( "/h2-console")
                         .permitAll()

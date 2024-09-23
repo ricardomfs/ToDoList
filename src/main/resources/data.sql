@@ -1,5 +1,5 @@
 CREATE TABLE my_user(
-    id          BIGINT PRIMARY KEY NOT NULL,
+    id          BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     username    VARCHAR(255) UNIQUE,
     password    VARCHAR(255)
 );

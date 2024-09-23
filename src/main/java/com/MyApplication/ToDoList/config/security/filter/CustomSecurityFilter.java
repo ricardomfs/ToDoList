@@ -3,6 +3,7 @@ package com.MyApplication.ToDoList.config.security.filter;
 import com.MyApplication.ToDoList.config.security.TokenService;
 import com.MyApplication.ToDoList.domain.user.MyUser;
 import com.MyApplication.ToDoList.domain.user.MyUserDetailsService;
+import com.MyApplication.ToDoList.domain.user.MyUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,14 +21,14 @@ public class CustomSecurityFilter extends OncePerRequestFilter {
     @Autowired
     private TokenService tokenService;
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private MyUserDetailsService myUserDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
         if (token != null) {
             var login = tokenService.validateToken(token);
-            MyUser user = (MyUser) userDetailsService.loadUserByUsername(login.isEmpty() ? null : login);
+            MyUser user = (MyUser) myUserDetailsService.loadUserByUsername(login.isEmpty() ? null : login);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder

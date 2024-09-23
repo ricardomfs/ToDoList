@@ -16,7 +16,6 @@ import java.util.List;
 @Table(name = "my_role")
 public class MyRole {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "descricao", nullable = false)

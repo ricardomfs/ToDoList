@@ -28,7 +28,7 @@ public class MyUserController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<String> makeLogin(@RequestBody @Valid LoginDto dto) {
-        return ResponseEntity.ok(myUserService.makeLogin(dto));
+    public ResponseEntity<String> performLogin(@RequestBody @Valid LoginDto dto) {
+        return ResponseEntity.ok(myUserService.performLogin(dto));
     }
 }

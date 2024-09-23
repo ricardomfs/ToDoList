@@ -5,9 +5,6 @@ import com.MyApplication.ToDoList.domain.MyRole.MyRole;
 import com.MyApplication.ToDoList.domain.MyRole.MyRoleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +18,14 @@ public class MyUserService {
     private final MyRoleService myRoleService;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+    private final MyUserDetailsService myUserDetailsService;
 
-    public MyUserService(MyUserRepository myUserRepository, MyRoleService myRoleService, PasswordEncoder passwordEncoder, TokenService tokenService) {
+    public MyUserService(MyUserRepository myUserRepository, MyRoleService myRoleService, PasswordEncoder passwordEncoder, TokenService tokenService, MyUserDetailsService myUserDetailsService) {
         this.myUserRepository = myUserRepository;
         this.myRoleService = myRoleService;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
-    }
-
-    public MyUser findUserByUsername(String username) {
-        return myUserRepository.findByUsername(username);
+        this.myUserDetailsService = myUserDetailsService;
     }
 
     @Transactional
@@ -49,13 +44,13 @@ public class MyUserService {
 
     @Transactional
     public void updateUser(MyUserUpdatePasswordDto dto) {
-        MyUser userToUpdate = this.findUserByUsername(dto.username());
+        MyUser userToUpdate = (MyUser) myUserDetailsService.loadUserByUsername(dto.username());
 
         userToUpdate.setPassword(dto.password());
     }
 
-    public String makeLogin(LoginDto dto) {
-        MyUser userByUsername = this.findUserByUsername(dto.username());
+    public String performLogin(LoginDto dto) {
+        MyUser userByUsername = (MyUser) myUserDetailsService.loadUserByUsername(dto.username());
         if (userByUsername == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário com  o username: " + dto.username() + " não encontrado");
         }
