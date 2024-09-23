@@ -22,7 +22,7 @@ public class MyUser implements UserDetails {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
     private String password;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "my_user_has_my_role",
             joinColumns = {@JoinColumn(name = "my_user_id", nullable = false, referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "my_role_id", nullable = false, referencedColumnName = "id")})

@@ -28,6 +28,10 @@ public class MyUserService {
         this.myUserDetailsService = myUserDetailsService;
     }
 
+    public MyUser findByUsername(String username) {
+        return (MyUser) myUserDetailsService.loadUserByUsername(username);
+    }
+
     @Transactional
     public MyUser persistUser(MyUserPersistDto dto) {
         MyUser myUserToPersist = new MyUser();

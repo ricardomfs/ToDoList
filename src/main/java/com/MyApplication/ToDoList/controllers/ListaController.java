@@ -36,7 +36,8 @@ public class ListaController {
     }
 
     @PatchMapping(path = "/update")
-    private ResponseEntity<ListaDtoDetalhar> updateListSituation(ListaDtoUpdateIncluir update) {
+    private ResponseEntity<ListaDtoDetalhar> updateListSituation(@RequestBody @Valid ListaDtoUpdateIncluir update) {
+        listaService.updateLista(update);
         return ResponseEntity.noContent().build();
     }
 

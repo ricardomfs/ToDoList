@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,15 +35,20 @@ public class ListaService {
 
     @Transactional
     public Lista persistLista(ListaDtoIncluir dto) {
-        MyUser bySecurityContext = myUserService.findBySecurityContext();
-        Lista listaJaExiste = this.findByName(dto.name(), bySecurityContext.getId());
-        if (listaJaExiste != null) {
+        String loggedUsername = myUserService
+                .findBySecurityContext()
+                .getUsername();
+        //PRECISO INICIALIZAR UMA SESSION NO HIBERNATE
+        MyUser byName = myUserService.findByUsername(loggedUsername);
+        Boolean listaJaExiste = this.findByName(dto.name(), byName.getId()) != null;
+        if (listaJaExiste) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma lista com esse nome");
         }
+        List<Lista> collectionListaDoUsuario = byName
+                .getLista();
         Lista listaToPersist = new Lista(dto);
-        listaToPersist.setMyUser(bySecurityContext);
-        bySecurityContext
-                .getLista()
+        listaToPersist.setMyUser(byName);
+        collectionListaDoUsuario
                 .add(listaToPersist);
         return listaRepository.save(listaToPersist);
     }
