@@ -8,6 +8,7 @@ import com.MyApplication.ToDoList.domain.user.MyUser;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author ricardo
@@ -48,5 +49,25 @@ public class MyRole {
         this.descricao = descricao;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyRole myRole = (MyRole) o;
+        return Objects.equals(id, myRole.id) && Objects.equals(descricao, myRole.descricao) && Objects.equals(myUserList, myRole.myUserList);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, descricao, myUserList);
+    }
+
+    @Override
+    public String toString() {
+        return "MyRole{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", myUserList=" + myUserList +
+                '}';
+    }
 }

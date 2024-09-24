@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Lista {
@@ -63,5 +64,28 @@ public class Lista {
 
     public void setMyUser(MyUser myUser) {
         this.myUser = myUser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lista lista = (Lista) o;
+        return Objects.equals(id, lista.id) && Objects.equals(name, lista.name) && Objects.equals(itens, lista.itens) && Objects.equals(myUser, lista.myUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, itens, myUser);
+    }
+
+    @Override
+    public String toString() {
+        return "Lista{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", itens=" + itens +
+                ", myUser=" + myUser +
+                '}';
     }
 }

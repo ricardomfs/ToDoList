@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -110,5 +111,29 @@ public class MyUser implements UserDetails {
 
     public void setLista(List<Lista> lista) {
         this.lista = lista;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyUser myUser = (MyUser) o;
+        return Objects.equals(id, myUser.id) && Objects.equals(username, myUser.username) && Objects.equals(password, myUser.password) && Objects.equals(myRoleList, myUser.myRoleList) && Objects.equals(lista, myUser.lista);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, myRoleList, lista);
+    }
+
+    @Override
+    public String toString() {
+        return "MyUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", myRoleList=" + myRoleList +
+                ", lista=" + lista +
+                '}';
     }
 }
