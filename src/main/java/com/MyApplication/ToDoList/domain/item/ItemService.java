@@ -61,6 +61,9 @@ public class ItemService {
     public void updateItemByName(ItemDtoUpdateIncluir itemToUpdate) {
         Item item = this.findByNameAndListaId(itemToUpdate.oldName(), itemToUpdate.idLista());
 
+        if (item == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item de nome:" + itemToUpdate.oldName() + " da lista de Id: " + itemToUpdate.idLista() + " não encontrado");
+        }
         if (!itemToUpdate
                 .newName()
                 .isBlank()) {
@@ -71,6 +74,7 @@ public class ItemService {
         ) {
             item.setPrazo(itemToUpdate.newPrazo());
         }
+
     }
 
     @Transactional

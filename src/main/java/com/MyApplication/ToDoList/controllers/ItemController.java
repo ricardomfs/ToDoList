@@ -18,21 +18,17 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ItemDtoDetalhar> persistItem(@RequestBody @Valid ItemDtoIncluir itemDto) {
-        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.save(itemDto)));
+    public ResponseEntity<ItemDtoDetalhar> persistItem(@RequestBody @Valid ItemDtoIncluir dto) {
+        return ResponseEntity.ok(new ItemDtoDetalhar(itemService.save(dto)));
     }
 
-    @GetMapping(path = "/find-By-lista")
-//    public ResponseEntity<List<ItemDtoDetalhar>> findAllByListaId(@RequestParam Long listaId, Pageable pageable) {
-    public ResponseEntity<List<ItemDtoDetalhar>> findAllByListaId(@RequestParam String listaId) {
-//        return ResponseEntity.ok(itemService
-//                .findAllByLista(listaId, pageable)
-//                .stream()
-//                .map(ItemDtoDetalhar::new)
-//                .toList());
-        return ResponseEntity
-                .noContent()
-                .build();
+    @GetMapping(path = "/find-by-lista")
+    public ResponseEntity<List<ItemDtoDetalhar>> findAllByListaId(@RequestParam Long listaId, Pageable pageable) {
+        return ResponseEntity.ok(itemService
+                .findAllByLista(listaId, pageable)
+                .stream()
+                .map(ItemDtoDetalhar::new)
+                .toList());
     }
 
     @GetMapping(path = "/{id}")
@@ -40,7 +36,7 @@ public class ItemController {
         return ResponseEntity.ok(new ItemDtoDetalhar(itemService.findByIdOrElseThrowBadRequest(id)));
     }
 
-    @PatchMapping(path = "/update")
+    @PutMapping(path = "/update")
     public ResponseEntity<Void> updateItem(@RequestBody @Valid ItemDtoUpdateIncluir itemToUpdate) {
         itemService.updateItemByName(itemToUpdate);
         return ResponseEntity

@@ -12,9 +12,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String name;
-    @NotBlank
     private LocalDate prazo;
     private boolean completed;
     @ManyToOne

@@ -1,6 +1,7 @@
 package com.MyApplication.ToDoList.domain.item;
 
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -8,9 +9,10 @@ import java.time.LocalDate;
 public record ItemDtoIncluir(
         @NotNull
         Long listaId,
-        @NotBlank
+        @NotEmpty
         String name,
-        @NotBlank
+        @JsonFormat(pattern = "yyyy-MM-dd")
+        @NotNull
         LocalDate prazo
 ) {
 }

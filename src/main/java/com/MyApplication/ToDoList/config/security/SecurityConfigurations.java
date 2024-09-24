@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,7 +42,7 @@ public class SecurityConfigurations {
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/test-endpoint")
                         .permitAll()
-                        .requestMatchers("/h2-console")
+                        .requestMatchers("/h2-console", "/h2-console/**")
                         .permitAll()
                         .requestMatchers("/error")
                         .anonymous()
@@ -50,7 +51,8 @@ public class SecurityConfigurations {
                 )
                 .addFilterBefore(customSecurityFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable);
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         return http.build();
     }
 

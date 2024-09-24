@@ -1,6 +1,7 @@
 package com.MyApplication.ToDoList.domain.item;
 
 import com.MyApplication.ToDoList.domain.lista.Lista;
+import com.MyApplication.ToDoList.domain.lista.ListaDtoDetalhar;
 
 import java.time.LocalDate;
 
@@ -9,7 +10,7 @@ public record ItemDtoDetalhar(
         String name,
         LocalDate prazo,
         boolean complete,
-        Lista lista
+        Long listaId
         ) {
         public ItemDtoDetalhar(Item item){
                 this(
@@ -17,7 +18,7 @@ public record ItemDtoDetalhar(
                         item.getName(),
                         item.getPrazo(),
                         item.isCompleted(),
-                        item.getLista()
+                        item.getLista().getId()
                 );
         }
 }
