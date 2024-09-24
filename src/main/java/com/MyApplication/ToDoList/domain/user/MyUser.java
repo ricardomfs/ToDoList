@@ -39,6 +39,17 @@ public class MyUser implements UserDetails {
         return rolesList;
     }
 
+    public MyUser() {
+    }
+
+    public MyUser(Long id, String username, String password, List<MyRole> myRoleList, List<Lista> lista) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.myRoleList = myRoleList;
+        this.lista = lista;
+    }
+
     @Override
     public String getPassword() {
         return this.password;
