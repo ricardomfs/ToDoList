@@ -133,7 +133,6 @@ public class MyUser implements UserDetails {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", myRoleList=" + myRoleList +
-                ", lista=" + lista +
                 '}';
     }
 }

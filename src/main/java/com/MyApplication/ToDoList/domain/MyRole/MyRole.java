@@ -67,7 +67,6 @@ public class MyRole {
         return "MyRole{" +
                 "id=" + id +
                 ", descricao='" + descricao + '\'' +
-                ", myUserList=" + myUserList +
                 '}';
     }
 }
