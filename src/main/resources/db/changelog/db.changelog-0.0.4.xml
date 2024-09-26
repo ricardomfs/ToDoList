@@ -4,18 +4,29 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="CREATE TABLE lista" author="ricardo">
-        <createTable tableName="lista">
+    <changeSet id="CREATE TABLE item" author="ricardo">
+        <createTable tableName="item">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true"/>
+                <constraints primaryKey="true"
+                             nullable="false"
+                             primaryKeyName="pk_item"
+                />
             </column>
-            <column name="nome" type="varchar">
+            <column name="name" type="varchar">
+                <constraints nullable="false"
+                             unique="true"
+                />
+            </column>
+            <column name="prazo" type="date">
                 <constraints nullable="false"/>
             </column>
-            <column name = "lista_de_itens" type="bigint">
+            <column name="completed" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name = "lista" type="bigint">
                 <constraints nullable="false"
-                             foreignKeyName="fk_lista_has_itens"
-                             references="item(id)"/>
+                             foreignKeyName="fk_item_has_lista"
+                             references="lista(id)"/>
             </column>
         </createTable>
     </changeSet>

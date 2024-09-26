@@ -4,22 +4,25 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet id="CREATE TABLE to_do_list" author="ricardo">
-        <createTable tableName="to_do_list">
+    <changeSet id="CREATE TABLE my_role" author="ricardo">
+        <createTable tableName="my_role">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true"/>
+                <constraints primaryKey="true"
+                             nullable="false"
+                             primaryKeyName="pk_my_role"
+                />
             </column>
-            <column name="nome" type="varchar">
+            <column name="descricao" type="VARCHAR(255)">
                 <constraints nullable="false"/>
-            </column>
-            <column name="data_de_criacao" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name = "lista" type="bigint">
-                <constraints nullable="false"
-                             foreignKeyName="fk_to_do_list_has_lista"
-                             references="list(id)"/>
             </column>
         </createTable>
+    </changeSet>
+    <changeSet id="Seed table my_role" author="ricardo">
+        <sql>
+            INSERT INTO my_role(id, descricao)
+            VALUES
+            (1, 'ROLE_USER'),
+            (2, 'ROLE_ADMIN');
+        </sql>
     </changeSet>
 </databaseChangeLog>
