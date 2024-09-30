@@ -26,6 +26,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class SecurityConfigurations {
     private final CustomSecurityFilter customSecurityFilter;
+    private static final String[] SWAGGER_ENDPOINTS = {
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-resources"
+    };
 
     public SecurityConfigurations(CustomSecurityFilter customSecurityFilter) {
         this.customSecurityFilter = customSecurityFilter;
@@ -46,6 +53,8 @@ public class SecurityConfigurations {
                         .permitAll()
                         .requestMatchers("/error")
                         .anonymous()
+                        .requestMatchers(SWAGGER_ENDPOINTS)
+                        .permitAll()
                         .anyRequest()
                         .authenticated()
                 )

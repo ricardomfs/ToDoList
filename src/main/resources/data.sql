@@ -1,4 +1,3 @@
-
 INSERT INTO my_user (username, password)
 VALUES
     ('testilson', '$2a$12$xSQ4emNq7injzBBgmyhJROisGLJsYoic8eGmi/85oFmgBI2tTN.BO'),
