@@ -4,7 +4,7 @@
  */
 package com.MyApplication.ToDoList.domain.MyRole;
 
-import com.MyApplication.ToDoList.domain.user.MyUser;
+import com.MyApplication.ToDoList.domain.myUser.MyUser;
 import jakarta.persistence.*;
 
 import java.util.List;

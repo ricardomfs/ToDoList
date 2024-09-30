@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.domain.user;
+package com.MyApplication.ToDoList.domain.myUser;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

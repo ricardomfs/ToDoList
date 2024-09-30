@@ -1,7 +1,7 @@
 package com.MyApplication.ToDoList.domain.lista;
 
-import com.MyApplication.ToDoList.domain.user.MyUser;
-import com.MyApplication.ToDoList.domain.user.MyUserService;
+import com.MyApplication.ToDoList.domain.myUser.MyUser;
+import com.MyApplication.ToDoList.domain.myUser.MyUserService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

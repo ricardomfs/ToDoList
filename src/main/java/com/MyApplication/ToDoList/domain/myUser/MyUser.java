@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.domain.user;
+package com.MyApplication.ToDoList.domain.myUser;
 
 import com.MyApplication.ToDoList.domain.MyRole.MyRole;
 import com.MyApplication.ToDoList.domain.lista.Lista;
@@ -131,7 +131,7 @@ public class MyUser implements UserDetails {
         return "MyUser{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", newPassword='" + password + '\'' +
                 ", myRoleList=" + myRoleList +
                 '}';
     }

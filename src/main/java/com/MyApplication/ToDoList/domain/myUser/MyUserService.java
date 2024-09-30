@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.domain.user;
+package com.MyApplication.ToDoList.domain.myUser;
 
 import com.MyApplication.ToDoList.config.security.TokenService;
 import com.MyApplication.ToDoList.domain.MyRole.MyRole;
@@ -28,7 +28,7 @@ public class MyUserService {
         this.myUserDetailsService = myUserDetailsService;
     }
 
-    public MyUser findByUsername(String username) {
+    public MyUser findByUsername(String username){
         return (MyUser) myUserDetailsService.loadUserByUsername(username);
     }
 
@@ -50,7 +50,7 @@ public class MyUserService {
     public void updateUser(MyUserUpdatePasswordDto dto) {
         MyUser userToUpdate = (MyUser) myUserDetailsService.loadUserByUsername(dto.username());
 
-        userToUpdate.setPassword(dto.password());
+        userToUpdate.setPassword(passwordEncoder.encode(dto.newPassword()));
     }
 
     public String performLogin(LoginDto dto) {

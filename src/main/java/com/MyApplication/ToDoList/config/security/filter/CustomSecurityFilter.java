@@ -1,20 +1,17 @@
 package com.MyApplication.ToDoList.config.security.filter;
 
 import com.MyApplication.ToDoList.config.security.TokenService;
-import com.MyApplication.ToDoList.domain.user.MyUser;
-import com.MyApplication.ToDoList.domain.user.MyUserDetailsService;
-import com.MyApplication.ToDoList.domain.user.MyUserService;
+import com.MyApplication.ToDoList.domain.myUser.MyUser;
+import com.MyApplication.ToDoList.domain.myUser.MyUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package com.MyApplication.ToDoList.config.security;
 
-import com.MyApplication.ToDoList.domain.user.MyUser;
+import com.MyApplication.ToDoList.domain.myUser.MyUser;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
