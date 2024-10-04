@@ -40,7 +40,7 @@ public class ListaService {
                 .getUsername();
         //PRECISO INICIALIZAR UMA SESSION NO HIBERNATE
         MyUser byName = myUserService.findByUsername(loggedUsername);
-        Boolean listaJaExiste = this.findByName(dto.name(), byName.getId()) != null;
+        boolean listaJaExiste = this.findByName(dto.name(), byName.getId()) != null;
         if (listaJaExiste) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma lista com esse nome");
         }

@@ -20,6 +20,6 @@ INSERT INTO item (name, prazo, completed, lista)
 VALUES
     ('item 1', '2024-12-01', true, 1),
     ('item 2', '2024-12-02', false, 1),
-    ('item 3', '2024-12-03', false, 1),
+    ('item 3', '2024-12-03', false, 2),
     ('item 4', '2024-12-04', false, 1),
-    ('item 5', '2024-12-05', false, 1);
+    ('item 5', '2024-12-05', false, 2);
