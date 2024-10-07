@@ -44,9 +44,6 @@ class ListaServiceTest {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        Page<Lista> all = listaService.findAll(Page
-                .empty()
-                .getPageable());
         Lista myFirstList = listaService.findByName("My Second List", principal.getId());
 
         Assertions

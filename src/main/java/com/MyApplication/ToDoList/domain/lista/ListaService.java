@@ -65,7 +65,16 @@ public class ListaService {
 
     @Transactional
     public void deleteLista(Long id) {
-        Lista lista = this.findByIdOrElseThrowNotFound(id);
-        listaRepository.delete(lista);
+        Lista listaToDelete = this.findByIdOrElseThrowNotFound(id);
+        boolean listaUserIsEqualToLoggedUser = listaToDelete
+                .getMyUser()
+                .getUsername()
+                .equals(myUserService
+                        .findBySecurityContext()
+                        .getUsername());
+        if (!listaUserIsEqualToLoggedUser) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A lista de id: " + id + " não pertence a esse usuário");
+        }
+        listaRepository.delete(listaToDelete);
     }
 }

@@ -21,28 +21,28 @@ public class ListaController {
     }
 
     @PostMapping
-    private ResponseEntity<ListaDtoDetalhar> save(@RequestBody @Valid ListaDtoIncluir dto) {
+    public ResponseEntity<ListaDtoDetalhar> save(@RequestBody @Valid ListaDtoIncluir dto) {
         return ResponseEntity.ok(new ListaDtoDetalhar(listaService.persistLista(dto)));
     }
 
     @GetMapping
-    private ResponseEntity<List<ListaDtoDetalhar>> findAll(Pageable page) {
+    public ResponseEntity<List<ListaDtoDetalhar>> findAll(Pageable page) {
         return ResponseEntity.ok(listaService.findAll(page).stream().map(ListaDtoDetalhar::new).toList());
     }
 
     @GetMapping(path = "/{id}")
-    private ResponseEntity<ListaDtoDetalhar> findById(@PathVariable Long id) {
+    public ResponseEntity<ListaDtoDetalhar> findById(@PathVariable Long id) {
         return ResponseEntity.ok(new ListaDtoDetalhar(listaService.findByIdOrElseThrowNotFound(id)));
     }
 
-    @PatchMapping(path = "/update")
-    private ResponseEntity<ListaDtoDetalhar> updateListSituation(@RequestBody @Valid ListaDtoUpdateIncluir update) {
+    @PatchMapping
+    public ResponseEntity<ListaDtoDetalhar> updateListSituation(@RequestBody @Valid ListaDtoUpdateIncluir update) {
         listaService.updateLista(update);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    private ResponseEntity<ListaDtoDetalhar> deleteLista(@PathVariable Long id) {
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<ListaDtoDetalhar> deleteLista(@PathVariable Long id) {
         listaService.deleteLista(id);
         return ResponseEntity.noContent().build();
     }
