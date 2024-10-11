@@ -1,5 +1,7 @@
 package com.MyApplication.ToDoList.domain.lista;
 
+import com.MyApplication.ToDoList.domain.lista.dtos.ListaDtoIncluir;
+import com.MyApplication.ToDoList.domain.lista.dtos.ListaDtoUpdateIncluir;
 import com.MyApplication.ToDoList.domain.myUser.MyUser;
 import com.MyApplication.ToDoList.domain.myUser.MyUserService;
 import jakarta.transaction.Transactional;

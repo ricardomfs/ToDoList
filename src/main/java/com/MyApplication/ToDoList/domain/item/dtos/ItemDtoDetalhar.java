@@ -1,7 +1,6 @@
-package com.MyApplication.ToDoList.domain.item;
+package com.MyApplication.ToDoList.domain.item.dtos;
 
-import com.MyApplication.ToDoList.domain.lista.Lista;
-import com.MyApplication.ToDoList.domain.lista.ListaDtoDetalhar;
+import com.MyApplication.ToDoList.domain.item.Item;
 
 import java.time.LocalDate;
 

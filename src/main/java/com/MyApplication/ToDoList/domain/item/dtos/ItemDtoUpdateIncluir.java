@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.domain.item;
+package com.MyApplication.ToDoList.domain.item.dtos;
 
 import jakarta.validation.constraints.NotNull;
 

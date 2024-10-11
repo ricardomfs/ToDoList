@@ -1,7 +1,7 @@
 package com.MyApplication.ToDoList.controllers;
 
-import com.MyApplication.ToDoList.domain.myUser.LoginDto;
-import com.MyApplication.ToDoList.domain.myUser.MyUserPersistDto;
+import com.MyApplication.ToDoList.domain.myUser.dtos.LoginDto;
+import com.MyApplication.ToDoList.domain.myUser.dtos.MyUserPersistDto;
 import com.MyApplication.ToDoList.domain.myUser.MyUserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

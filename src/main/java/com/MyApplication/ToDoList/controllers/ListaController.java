@@ -1,8 +1,8 @@
 package com.MyApplication.ToDoList.controllers;
 
-import com.MyApplication.ToDoList.domain.lista.ListaDtoDetalhar;
-import com.MyApplication.ToDoList.domain.lista.ListaDtoIncluir;
-import com.MyApplication.ToDoList.domain.lista.ListaDtoUpdateIncluir;
+import com.MyApplication.ToDoList.domain.lista.dtos.ListaDtoDetalhar;
+import com.MyApplication.ToDoList.domain.lista.dtos.ListaDtoIncluir;
+import com.MyApplication.ToDoList.domain.lista.dtos.ListaDtoUpdateIncluir;
 import com.MyApplication.ToDoList.domain.lista.ListaService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;

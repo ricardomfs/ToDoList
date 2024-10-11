@@ -1,4 +1,6 @@
-package com.MyApplication.ToDoList.domain.MyRole;
+package com.MyApplication.ToDoList.domain.MyRole.dtos;
+
+import com.MyApplication.ToDoList.domain.MyRole.MyRole;
 
 public record MyRoleDto(
         Long id,

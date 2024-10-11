@@ -1,6 +1,7 @@
 package com.MyApplication.ToDoList.domain.lista;
 
 import com.MyApplication.ToDoList.domain.item.Item;
+import com.MyApplication.ToDoList.domain.lista.dtos.ListaDtoIncluir;
 import com.MyApplication.ToDoList.domain.myUser.MyUser;
 import jakarta.persistence.*;
 

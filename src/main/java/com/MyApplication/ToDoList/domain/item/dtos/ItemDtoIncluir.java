@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.domain.item;
+package com.MyApplication.ToDoList.domain.item.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;

@@ -1,4 +1,4 @@
-package com.MyApplication.ToDoList.domain.myUser;
+package com.MyApplication.ToDoList.domain.myUser.dtos;
 
 public record MyUserUpdatePasswordDto(
         String username,

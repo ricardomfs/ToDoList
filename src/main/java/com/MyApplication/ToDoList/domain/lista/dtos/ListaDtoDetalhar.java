@@ -1,6 +1,7 @@
-package com.MyApplication.ToDoList.domain.lista;
+package com.MyApplication.ToDoList.domain.lista.dtos;
 
-import com.MyApplication.ToDoList.domain.item.ItemDtoDetalhar;
+import com.MyApplication.ToDoList.domain.item.dtos.ItemDtoDetalhar;
+import com.MyApplication.ToDoList.domain.lista.Lista;
 
 import java.util.ArrayList;
 import java.util.List;

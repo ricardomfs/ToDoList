@@ -1,6 +1,7 @@
-package com.MyApplication.ToDoList.domain.myUser;
+package com.MyApplication.ToDoList.domain.myUser.dtos;
 
-import com.MyApplication.ToDoList.domain.MyRole.MyRoleDto;
+import com.MyApplication.ToDoList.domain.MyRole.dtos.MyRoleDto;
+import com.MyApplication.ToDoList.domain.myUser.MyUser;
 
 import java.util.List;
 
