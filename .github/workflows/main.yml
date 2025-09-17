@@ -23,6 +23,8 @@ jobs:
           USERNAME: "ricardomfs" # <--- MUDANÇA 1
           PROJECT_NUMBER: 1
         run: |
+          echo $USERNAME
+          echo $PROJECT_NUMBER
           gh api graphql -f query='
             # A consulta agora pede por um "user" em vez de "org"
             query($user: String!, $number: Int!) { # <--- MUDANÇA 2
