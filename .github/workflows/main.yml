@@ -24,8 +24,6 @@ jobs:
           PROJECT_NUMBER: 1
         run: |
           gh api graphql -F user=$USERNAME -F number=$PROJECT_NUMBER -F query='
-            print(user)
-            print(number)
             # A consulta agora pede por um "user" em vez de "org"
             query($user: String!, $number: Int!) { # <--- MUDANÇA 2
               user(login: $user){ # <--- MUDANÇA 3
