@@ -23,9 +23,9 @@ jobs:
           USERNAME: "ricardomfs" # <--- MUDANÇA 1
           PROJECT_NUMBER: 1
         run: |
-          echo $USERNAME
-          echo $PROJECT_NUMBER
-          gh api graphql -f query='
+          gh api graphql -F user=$USERNAME -F number=$PROJECT_NUMBER -F query='
+            print(user)
+            print(number)
             # A consulta agora pede por um "user" em vez de "org"
             query($user: String!, $number: Int!) { # <--- MUDANÇA 2
               user(login: $user){ # <--- MUDANÇA 3
@@ -49,7 +49,7 @@ jobs:
                   }
                 }
               }
-            }' -f user=$USERNAME -f number=$PROJECT_NUMBER > project_data.json # <--- MUDANÇA 4 e 5 (parâmetro e flag -f)
+            }' > project_data.json # <--- MUDANÇA 4 e 5 (parâmetro e flag -f)
 
           # Os caminhos no "jq" também foram atualizados de "organization" para "user"
           echo 'PROJECT_ID='$(jq '.data.user.projectV2.id' project_data.json) >> $GITHUB_ENV # <--- MUDANÇA 6
